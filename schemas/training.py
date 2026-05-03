@@ -40,11 +40,13 @@ class TrainingSessionDraft(BaseModel):
     total_questions: int = Field(default=5, ge=1, le=20)
     questions_answered: int = Field(default=0, ge=0, le=20)
     correct_answers: int = Field(default=0, ge=0, le=20)
+    learning_step: int = Field(default=0, ge=0)
     current_question: str | None = None
     last_answer_feedback: str | None = None
+    last_bot_reply: str | None = None
     final_summary: str | None = None
 
-    @field_validator("employee_name", "current_question", "last_answer_feedback", "final_summary")
+    @field_validator("employee_name", "current_question", "last_answer_feedback", "last_bot_reply", "final_summary")
     @classmethod
     def normalize_optional_text(cls, value: str | None) -> str | None:
         return _normalize_text(value)
@@ -71,3 +73,10 @@ class TrainingAssistantTurn(BaseModel):
     @classmethod
     def normalize_optional_text(cls, value: str | None) -> str | None:
         return _normalize_text(value)
+
+
+class QuizEvaluation(BaseModel):
+    """JSON-ответ LLM-судьи при оценке ответа на вопрос теста."""
+
+    is_correct: bool
+    feedback: str = Field(min_length=1, max_length=500)

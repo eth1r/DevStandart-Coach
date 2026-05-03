@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     openai_api_key: str = Field(..., alias="OPENAI_API_KEY")
     openai_model: str = Field(default="gpt-4.1-mini", alias="OPENAI_MODEL")
     openai_base_url: str = Field(default="https://api.openai.com/v1", alias="OPENAI_BASE_URL")
+    openai_proxy: str | None = Field(default=None, alias="OPENAI_PROXY")
     training_topic: str = Field(default="Корпоративный онбординг", alias="TRAINING_TOPIC")
     training_material: str = Field(
         default=(

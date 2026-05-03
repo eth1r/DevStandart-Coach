@@ -1,4 +1,5 @@
 from .training import (
+    QuizEvaluation,
     TrainingAssistantTurn,
     TrainingResultCreate,
     TrainingResultRead,
@@ -6,6 +7,7 @@ from .training import (
 )
 
 __all__ = [
+    "QuizEvaluation",
     "TrainingAssistantTurn",
     "TrainingResultCreate",
     "TrainingResultRead",

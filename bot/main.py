@@ -2,6 +2,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
+from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from bot.handlers import router
@@ -47,7 +48,8 @@ async def run_bot() -> None:
     setup_logging(settings.log_level)
 
     storage = MemoryStorage()
-    bot = Bot(token=settings.bot_token, default=DefaultBotProperties())
+    tg_session = AiohttpSession(proxy=settings.openai_proxy) if settings.openai_proxy else AiohttpSession()
+    bot = Bot(token=settings.bot_token, session=tg_session, default=DefaultBotProperties())
     dp = Dispatcher(storage=storage)
 
     engine = create_engine(settings.database_url)
