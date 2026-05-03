@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  onboarding-coach-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: onboarding-coach-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8001:8000"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/onboarding-coach/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  app-network:
+    external: true
